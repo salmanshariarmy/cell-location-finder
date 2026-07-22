@@ -7,11 +7,11 @@ let cid = document.getElementById("cid").value;
 
 
 let apiURL =
-"https:///cell-location-api.salmanshariardipu.workers.dev/" +
-"?mcc="+mcc+
-"&mnc="+mnc+
-"&lac="+lac+
-"&cid="+cid;
+"https://cell-location-api.salmanshariardipu.workers.dev/" +
+"?mcc=" + mcc +
+"&mnc=" + mnc +
+"&lac=" + lac +
+"&cid=" + cid;
 
 
 let response = await fetch(apiURL);
@@ -27,19 +27,22 @@ let lon = data.lon;
 
 map.setView([lat,lon],15);
 
+
 L.marker([lat,lon])
 .addTo(map)
 .bindPopup(
-"Cell Location<br>"+
-lat+","+lon
+"Cell Location<br>" +
+lat + "," + lon
 )
 .openPopup();
 
 
 document.getElementById("result").innerHTML =
-"Latitude: "+lat+
-"<br>Longitude: "+lon+
-"<br><a target='_blank' href='https://www.google.com/maps?q="+lat+","+lon+"'>Open Google Maps</a>";
+"Latitude: " + lat +
+"<br>Longitude: " + lon +
+"<br><a target='_blank' href='https://www.google.com/maps?q=" 
++ lat + "," + lon +
+"'>Open Google Maps</a>";
 
 }
 
