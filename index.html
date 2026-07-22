@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cell Location Finder</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+<style>
+body {
+font-family: Arial;
+margin:20px;
+}
+
+#map {
+height:500px;
+margin-top:20px;
+}
+
+input {
+width:120px;
+padding:5px;
+}
+
+button {
+padding:8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Cell Location Finder</h2>
+
+MCC:
+<input id="mcc" value="470">
+
+MNC:
+<input id="mnc" value="3">
+
+<br><br>
+
+LAC:
+<input id="lac" value="171">
+
+CID:
+<input id="cid" value="29432">
+
+<button onclick="findLocation()">
+Search
+</button>
+
+<p id="result"></p>
+
+<div id="map"></div>
+
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+let map = L.map('map')
+.setView([23.7,90.39],12);
+
+
+L.tileLayer(
+'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+).addTo(map);
+
+
+function findLocation(){
+
+// Example data from your own database
+let lat = 23.703922;
+let lon = 90.393646;
+
+
+map.setView([lat,lon],15);
+
+
+L.marker([lat,lon])
+.addTo(map)
+.bindPopup(
+"Cell Tower Location<br>"+
+lat+","+lon
+)
+.openPopup();
+
+
+document.getElementById("result").innerHTML =
+"Latitude: "+lat+
+"<br>Longitude: "+lon+
+"<br><a target='_blank' href='https://www.google.com/maps?q="+lat+","+lon+"'>Open Google Maps</a>";
+
+}
+
+</script>
+
+</body>
+</html>
