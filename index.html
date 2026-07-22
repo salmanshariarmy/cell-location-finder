@@ -15,7 +15,6 @@ let apiURL =
 
 
 let response = await fetch(apiURL);
-
 let data = await response.json();
 
 
@@ -31,8 +30,7 @@ map.setView([lat,lon],15);
 L.marker([lat,lon])
 .addTo(map)
 .bindPopup(
-"Cell Location<br>" +
-lat + "," + lon
+"Cell Location<br>" + lat + "," + lon
 )
 .openPopup();
 
@@ -40,12 +38,11 @@ lat + "," + lon
 document.getElementById("result").innerHTML =
 "Latitude: " + lat +
 "<br>Longitude: " + lon +
-"<br><a target='_blank' href='https://www.google.com/maps?q=" 
-+ lat + "," + lon +
+"<br><a target='_blank' href='https://www.google.com/maps?q=" +
+lat + "," + lon +
 "'>Open Google Maps</a>";
 
 }
-
 else {
 
 document.getElementById("result").innerHTML =
