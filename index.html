@@ -24,10 +24,10 @@ let lat = data.lat;
 let lon = data.lon;
 
 
-map.setView([lat,lon],15);
+map.setView([lat, lon], 15);
 
 
-L.marker([lat,lon])
+L.marker([lat, lon])
 .addTo(map)
 .bindPopup(
 "Cell Location<br>" + lat + "," + lon
