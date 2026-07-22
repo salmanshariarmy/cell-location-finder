@@ -1,34 +1,31 @@
 async function findLocation(){
 
-let response = await fetch("cells.csv");
-let text = await response.text();
-
-let rows = text.trim().split("\n");
-
 let mcc = document.getElementById("mcc").value;
 let mnc = document.getElementById("mnc").value;
 let lac = document.getElementById("lac").value;
 let cid = document.getElementById("cid").value;
 
 
-for(let i = 1; i < rows.length; i++){
+let apiURL =
+"https:///cell-location-api.salmanshariardipu.workers.dev/" +
+"?mcc="+mcc+
+"&mnc="+mnc+
+"&lac="+lac+
+"&cid="+cid;
 
-let data = rows[i].split(",");
+
+let response = await fetch(apiURL);
+
+let data = await response.json();
 
 
-if(
-data[0] == mcc &&
-data[1] == mnc &&
-data[2] == lac &&
-data[3] == cid
-){
+if(data.lat){
 
-let lat = data[4];
-let lon = data[5];
+let lat = data.lat;
+let lon = data.lon;
 
 
 map.setView([lat,lon],15);
-
 
 L.marker([lat,lon])
 .addTo(map)
@@ -44,13 +41,13 @@ document.getElementById("result").innerHTML =
 "<br>Longitude: "+lon+
 "<br><a target='_blank' href='https://www.google.com/maps?q="+lat+","+lon+"'>Open Google Maps</a>";
 
-return;
-
 }
 
-}
+else {
 
 document.getElementById("result").innerHTML =
 "Cell not found";
+
+}
 
 }
