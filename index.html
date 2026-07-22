@@ -1,79 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Cell Location Finder</title>
+async function findLocation(){
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet/dist/leaflet.css">
+let response = await fetch("cells.csv");
+let text = await response.text();
 
-<style>
-body {
-font-family: Arial;
-margin:20px;
-}
+let rows = text.trim().split("\n");
 
-#map {
-height:500px;
-margin-top:20px;
-}
-
-input {
-width:120px;
-padding:5px;
-}
-
-button {
-padding:8px;
-}
-</style>
-
-</head>
-
-<body>
-
-<h2>Cell Location Finder</h2>
-
-MCC:
-<input id="mcc" value="470">
-
-MNC:
-<input id="mnc" value="3">
-
-<br><br>
-
-LAC:
-<input id="lac" value="171">
-
-CID:
-<input id="cid" value="29432">
-
-<button onclick="findLocation()">
-Search
-</button>
-
-<p id="result"></p>
-
-<div id="map"></div>
+let mcc = document.getElementById("mcc").value;
+let mnc = document.getElementById("mnc").value;
+let lac = document.getElementById("lac").value;
+let cid = document.getElementById("cid").value;
 
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+for(let i = 1; i < rows.length; i++){
 
-<script>
-
-let map = L.map('map')
-.setView([23.7,90.39],12);
+let data = rows[i].split(",");
 
 
-L.tileLayer(
-'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-).addTo(map);
+if(
+data[0] == mcc &&
+data[1] == mnc &&
+data[2] == lac &&
+data[3] == cid
+){
 
-
-function findLocation(){
-
-// Example data from your own database
-let lat = 23.703922;
-let lon = 90.393646;
+let lat = data[4];
+let lon = data[5];
 
 
 map.setView([lat,lon],15);
@@ -82,7 +33,7 @@ map.setView([lat,lon],15);
 L.marker([lat,lon])
 .addTo(map)
 .bindPopup(
-"Cell Tower Location<br>"+
+"Cell Location<br>"+
 lat+","+lon
 )
 .openPopup();
@@ -93,9 +44,13 @@ document.getElementById("result").innerHTML =
 "<br>Longitude: "+lon+
 "<br><a target='_blank' href='https://www.google.com/maps?q="+lat+","+lon+"'>Open Google Maps</a>";
 
+return;
+
 }
 
-</script>
+}
 
-</body>
-</html>
+document.getElementById("result").innerHTML =
+"Cell not found";
+
+}
